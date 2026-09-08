@@ -1,0 +1,109 @@
+@import "tailwindcss" source(none);
+@source "../src";
+
+@theme {
+  --color-paper: #F2EDE4;
+  --color-ink: #1C1C1C;
+  --color-blueprint: #1A3A5C;
+  --color-red-mark: #C0392B;
+  --color-grid-line: #C8C0B0;
+  --color-stamp-bg: #E8E0D0;
+  --color-muted-ink: #7A6F63;
+
+  --font-display: "Special Elite", serif;
+  --font-serif: "IBM Plex Serif", Georgia, serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+:root {
+  --radius: 0px;
+  --background: #F2EDE4;
+  --foreground: #1C1C1C;
+  --border: #C8C0B0;
+  --primary: #1A3A5C;
+  --primary-foreground: #F2EDE4;
+  --muted: #E8E0D0;
+  --muted-foreground: #7A6F63;
+  --accent: #C0392B;
+  --ring: #1A3A5C;
+}
+
+html, body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-serif);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  background-image:
+    linear-gradient(to right, var(--color-grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-grid-line) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-attachment: fixed;
+  opacity: 1;
+}
+
+body::before {
+  content: "";
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--color-grid-line) 45%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--color-grid-line) 45%, transparent) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+::selection { background: var(--color-red-mark); color: var(--color-paper); }
+
+.cursor-blink {
+  display: inline-block;
+  width: 0.6ch;
+  background: currentColor;
+  animation: blink 1s steps(2, start) infinite;
+  margin-left: 2px;
+  height: 0.85em;
+  vertical-align: -0.05em;
+}
+@keyframes blink { to { visibility: hidden; } }
+
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity 400ms ease-out, transform 400ms ease-out; }
+.reveal.in { opacity: 1; transform: none; }
+
+.stamp {
+  display: inline-block;
+  border: 2.5px solid var(--color-red-mark);
+  color: var(--color-red-mark);
+  padding: 4px 10px;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  transform: rotate(-3deg);
+  background: color-mix(in srgb, var(--color-paper) 70%, transparent);
+}
+
+.crop-corners { position: relative; }
+.crop-corners::before, .crop-corners::after,
+.crop-corners > .cc-tl, .crop-corners > .cc-tr {
+  content: "+";
+  position: absolute;
+  color: var(--color-blueprint);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1;
+}
+.crop-corners::before { top: -8px; left: -8px; }
+.crop-corners::after  { bottom: -8px; right: -8px; }
+.crop-corners > .cc-tl { top: -8px; right: -8px; }
+.crop-corners > .cc-tr { bottom: -8px; left: -8px; }
+
+.pulse-arrow { animation: pulseArrow 2s ease-in-out infinite; }
+@keyframes pulseArrow {
+  0%, 100% { opacity: 0.4; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(4px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .reveal { opacity: 1; transform: none; }
+}
