@@ -4,10 +4,10 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "dev": "npx node@22 node_modules/vite/bin/vite.js dev",
-    "build": "npx node@22 node_modules/vite/bin/vite.js build",
-    "build:dev": "npx node@22 node_modules/vite/bin/vite.js build --mode development",
-    "preview": "npx node@22 node_modules/vite/bin/vite.js preview",
+    "dev": "vite dev",
+    "build": "vite build",
+    "build:dev": "vite build --mode development",
+    "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write ."
   },
