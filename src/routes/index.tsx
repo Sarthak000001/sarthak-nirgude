@@ -300,7 +300,9 @@ function Hero({
             View Projects →
           </a>
           <a
-            href="#"
+            href="/Sarthak_Nirgude_Resume_v1.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
             className="font-mono text-xs uppercase tracking-[0.22em] px-7 py-4 transition-colors"
             style={{ border: "1.5px solid var(--color-blueprint)", color: "var(--color-blueprint)" }}
             onMouseEnter={(e) => { e.currentTarget.style.borderColor = "var(--color-red-mark)"; e.currentTarget.style.color = "var(--color-red-mark)"; }}
