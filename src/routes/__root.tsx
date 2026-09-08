@@ -78,9 +78,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Sarthak Nirgude — Software Engineer" },
-      { name: "description", content: "Personal portfolio of Sarthak Nirgude — Software Engineer at Yardi Software. Problem solver. Can't leave things half-finished." },
-      { property: "og:title", content: "Sarthak Nirgude — Software Engineer" },
+      { title: "Sarthak Nirgude | Full Stack Developer & Java Engineer" },
+      { name: "description", content: "Personal portfolio of Sarthak Nirgude, a Full Stack Software Engineer based in Pune. Specialized in building scalable applications with Java, React, Next.js, and AI integrations." },
+      { property: "og:title", content: "Sarthak Nirgude | Full Stack Developer & Java Engineer" },
       { property: "og:description", content: "Engineer / Developer / Pune, IN" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

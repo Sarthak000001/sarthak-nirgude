@@ -6,26 +6,26 @@ export const Route = createFileRoute("/")({
   component: PortfolioPage,
   head: () => ({
     meta: [
-      { title: "Sarthak Nirgude — Software Engineer & Full-Stack Developer" },
+      { title: "Sarthak Nirgude | Full Stack Developer & Java/React Engineer Portfolio" },
       {
         name: "description",
         content:
-          "Portfolio of Sarthak Nirgude — Software Engineer at Yardi Software. Full-stack developer building AI-driven, scalable products with Java, React, and Next.js.",
+          "Personal portfolio of Sarthak Nirgude, a Full Stack Software Engineer based in Pune. Specialized in building scalable applications with Java, React, Next.js, and AI integrations.",
       },
-      { property: "og:title", content: "Sarthak Nirgude — Software Engineer & Full-Stack Developer" },
+      { property: "og:title", content: "Sarthak Nirgude | Full Stack Developer & Java/React Engineer Portfolio" },
       {
         property: "og:description",
         content:
-          "Software Engineer. Problem solver. Building AI-driven, full-stack products from Pune, India.",
+          "Personal portfolio of Sarthak Nirgude, a Full Stack Software Engineer based in Pune. Specialized in building scalable applications with Java, React, Next.js, and AI integrations.",
       },
-      { property: "og:type", content: "website" },
+      { property: "og:type", content: "profile" },
       { property: "og:url", content: "/" },
       { property: "og:image", content: portrait.url },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Sarthak Nirgude — Software Engineer" },
+      { name: "twitter:title", content: "Sarthak Nirgude | Full Stack Developer & Java/React Engineer Portfolio" },
       {
         name: "twitter:description",
-        content: "Full-stack engineer building AI-driven products. Java · React · Next.js.",
+        content: "Personal portfolio of Sarthak Nirgude, a Full Stack Software Engineer based in Pune.",
       },
       { name: "twitter:image", content: portrait.url },
     ],
@@ -35,16 +35,28 @@ export const Route = createFileRoute("/")({
         type: "application/ld+json",
         children: JSON.stringify({
           "@context": "https://schema.org",
-          "@type": "Person",
-          name: "Sarthak Nirgude",
-          jobTitle: "Software Engineer",
-          worksFor: { "@type": "Organization", name: "Yardi Software" },
-          image: portrait.url,
-          address: { "@type": "PostalAddress", addressLocality: "Pune", addressCountry: "IN" },
-          sameAs: [
-            "https://github.com/Sarthak000001",
-            "https://linkedin.com/in/sarthaknirgude7",
-          ],
+          "@graph": [
+            {
+              "@type": "Person",
+              "@id": "#person",
+              name: "Sarthak Nirgude",
+              jobTitle: "Software Engineer",
+              worksFor: { "@type": "Organization", name: "Yardi Software" },
+              image: portrait.url,
+              address: { "@type": "PostalAddress", addressLocality: "Pune", addressCountry: "IN" },
+              sameAs: [
+                "https://github.com/Sarthak000001",
+                "https://linkedin.com/in/sarthaknirgude7",
+              ],
+            },
+            {
+              "@type": "ProfilePage",
+              "@id": "#webpage",
+              url: "/",
+              name: "Sarthak Nirgude | Full Stack Developer & Java/React Engineer Portfolio",
+              about: { "@id": "#person" }
+            }
+          ]
         }),
       },
     ],
@@ -209,12 +221,14 @@ function PortfolioPage() {
   return (
     <div className="font-serif text-ink">
       <Nav active={active} onNavClick={onNavClick} />
-      <Hero name={name} tag={tag} onNavClick={onNavClick} />
-      <About />
-      <Skills />
-      <Projects />
-      <Experience />
-      <Education />
+      <main>
+        <Hero name={name} tag={tag} onNavClick={onNavClick} />
+        <About />
+        <Skills />
+        <Projects />
+        <Experience />
+        <Education />
+      </main>
       <Contact />
     </div>
   );
@@ -230,7 +244,7 @@ function Nav({ active, onNavClick }: { active: string; onNavClick: (e: React.Mou
         <a href="#hero" onClick={(e) => onNavClick(e, "hero")} className="font-display text-2xl tracking-wider" style={{ color: "var(--color-blueprint)" }}>
           SN
         </a>
-        <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-1 font-mono text-[11px] uppercase tracking-[0.18em]">
+        <nav aria-label="Main Navigation" className="flex flex-wrap items-center justify-center gap-x-6 gap-y-1 font-mono text-[11px] uppercase tracking-[0.18em]">
           {NAV.map((n) => (
             <a
               key={n.id}
@@ -299,13 +313,14 @@ function Hero({
 
       <div className="pointer-events-auto absolute bottom-6 left-6 flex gap-3">
         {[
-          { label: "GH", href: "https://github.com/Sarthak000001" },
-          { label: "LI", href: "https://linkedin.com/in/sarthaknirgude7" },
-          { label: "✉", href: "mailto:sarthaknirgude8@gmail.com" },
+          { label: "GH", href: "https://github.com/Sarthak000001", ariaLabel: "GitHub Profile" },
+          { label: "LI", href: "https://linkedin.com/in/sarthaknirgude7", ariaLabel: "LinkedIn Profile" },
+          { label: "✉", href: "mailto:sarthaknirgude8@gmail.com", ariaLabel: "Send an Email" },
         ].map((s) => (
           <a
             key={s.label}
             href={s.href}
+            aria-label={s.ariaLabel}
             target="_blank"
             rel="noopener noreferrer"
             className="flex h-10 w-10 items-center justify-center rounded-full font-mono text-[11px] transition-colors"
@@ -373,6 +388,9 @@ function About() {
                   src={portrait.url}
                   alt="Portrait of Sarthak Nirgude, Software Engineer based in Pune, India"
                   loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="500"
                   className="absolute inset-0 h-full w-full object-cover object-[center_15%]"
                   style={{ filter: "grayscale(0.15) contrast(1.02)" }}
                 />
@@ -631,7 +649,7 @@ function EduCard({ year, school, detail, score }: { year: string; school: string
 
 function Contact() {
   return (
-    <section id="contact" className="px-6 py-28" style={{ background: "var(--color-blueprint)", color: "var(--color-paper)" }}>
+    <footer id="contact" className="px-6 py-28" style={{ background: "var(--color-blueprint)", color: "var(--color-paper)" }}>
       <div className="mx-auto max-w-6xl">
         <p className="font-mono text-[11px] uppercase tracking-[0.32em]" style={{ color: "var(--color-grid-line)" }}>
           § 06 — Transmission
@@ -644,13 +662,14 @@ function Contact() {
         </p>
         <div className="reveal mt-12 space-y-4 font-mono text-[15px]">
           {[
-            { k: "✉", v: "sarthaknirgude8@gmail.com", h: "mailto:sarthaknirgude8@gmail.com" },
-            { k: "GH", v: "github.com/Sarthak000001", h: "https://github.com/Sarthak000001" },
-            { k: "LI", v: "linkedin.com/in/sarthaknirgude7", h: "https://linkedin.com/in/sarthaknirgude7" },
+            { k: "✉", v: "sarthaknirgude8@gmail.com", h: "mailto:sarthaknirgude8@gmail.com", label: "Email Sarthak" },
+            { k: "GH", v: "github.com/Sarthak000001", h: "https://github.com/Sarthak000001", label: "GitHub Profile" },
+            { k: "LI", v: "linkedin.com/in/sarthaknirgude7", h: "https://linkedin.com/in/sarthaknirgude7", label: "LinkedIn Profile" },
           ].map((c) => (
             <a
               key={c.k}
               href={c.h}
+              aria-label={c.label}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-6 py-3 transition-colors"
@@ -670,6 +689,6 @@ function Contact() {
           Designed with intention. Built with precision. © Sarthak Nirgude 2025.
         </p>
       </div>
-    </section>
+    </footer>
   );
 }
